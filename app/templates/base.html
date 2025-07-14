@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta property="og:title" content="Personal Portfolio">
+    <meta property="og:description" content="My Personal Portfolio">
+    <meta property="og:url" content="{{ url }}">
+    
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="../static/styles/main.css">
+    <link rel='icon' href='./static/img/favicon.ico' type='image/x-icon' />
+    <title>{{ title }}</title>
+
+    <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
+</head>
+
+
+<body>
+    <div id="particles-js"></div>
+    
+    <div class="content-wrapper">
+        <header class="nav-bar">
+            <div class="nav-content">
+                <a href="/">
+                    <div class="nav-logo">
+                        <img src="../static/img/logo.svg" />
+                    </div>
+                </a>
+            </div>
+        </header>
+        
+        {% block content %}{% endblock %}
+        
+        {% for user in users %}
+        <div class="profile">
+            <div id="profile-picture" class="profile-picture">
+                <a href="#{{ user.name }}">
+                    <img src="{{ user.pic }}">
+                </a>
+            </div>
+            <h1>{{ user.name }}</h1>
+        </div>
+        {% endfor %}
+
+        {% for user in users %}
+        <div class="cont">
+            <h1 id="{{ user.name }}">{{ user.name }}</h1>
+            <div class="about">
+                <h2>About</h2>
+                {{ user.about }}
+            </div>
+            <div class="education">
+                <div id="tit1">
+                    <h2>Education</h2>
+                </div>
+                <h3 class="education--school">{{ user.education.school }}</h3>
+                <p class="education--major">{{ user.education.major }}</p>
+                <p class="education--grad">{{ user.education.grad }}</p>
+            </div>
+            <div class="work">
+                <h2>Work Experiences</h2>
+                {% for item in user.work %}
+                <div class="work--item">
+                    <h3 class="work--title">{{ item.title }}</h3>
+                    <h3 class="work--company">{{ item.company }}</h3>
+                    <ul>
+                        {% for bullet in item.description %}
+                        <li class="work--description">{{ bullet }}</li>
+                        {% endfor %}
+                    </ul>
+                </div>
+                {% endfor %}
+            </div>
+            
+            <div class="places-button" style="margin-top: 1rem;">
+                <a href="/places">
+                    <button style="padding: 0.6rem 1.2rem; background-color: #3498db; color: white; border: none; border-radius: 5px; cursor: pointer;">
+                        View Places
+                    </button>
+                </a>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+    
+   <script>
+document.addEventListener('DOMContentLoaded', function() {
+    particlesJS("particles-js", {
+        "particles": {
+            "number": { 
+                "value": 80, 
+                "density": { 
+                    "enable": true, 
+                    "value_area": 800 
+                } 
+            },
+            "color": { 
+                "value": "#ffffff" 
+            },
+            "shape": { 
+                "type": "circle" 
+            },
+            "opacity": {
+                "value": 0.5,
+                "random": true,
+                "anim": { 
+                    "enable": true, 
+                    "speed": 1, 
+                    "opacity_min": 0.1, 
+                    "sync": false 
+                }
+            },
+            "size": { 
+                "value": 3, 
+                "random": true 
+            },
+            "line_linked": { 
+                "enable": false 
+            },
+            "move": {
+                "enable": true,
+                "speed": 0.5,
+                "direction": "none",
+                "random": true,
+                "straight": false,
+                "out_mode": "out"
+            }
+        },
+        "interactivity": {
+            "detect_on": "canvas",
+            "events": {
+                "onhover": { 
+                    "enable": true,
+                    "mode": "repulse" // Changed from "push" to "repulse" for better effect
+                },
+                "onclick": { 
+                    "enable": true, // Enabled click interaction
+                    "mode": "push" 
+                },
+                "resize": true
+            },
+            "modes": {
+                "repulse": {
+                    "distance": 100,
+                    "duration": 0.4
+                },
+                "push": {
+                    "particles_nb": 4
+                },
+                "bubble": {
+                    "distance": 200,
+                    "size": 6,
+                    "duration": 2,
+                    "opacity": 0.8,
+                    "speed": 3
+                }
+            }
+        },
+        "retina_detect": true
+    });
+});
+</script>
+</body>
+</html>
