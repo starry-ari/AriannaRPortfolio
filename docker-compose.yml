@@ -1,4 +1,4 @@
-version: "2.38.2"
+version: "3.8"
 services:
   myportfolio:
     container_name: myportfolio
@@ -6,8 +6,8 @@ services:
     restart: always
     env_file:
       - .env
-    environment:
-      - FLASK_ENV=development
+    command: python3 run.py
+
     ports:
       - "5000:5000"
     volumes:
