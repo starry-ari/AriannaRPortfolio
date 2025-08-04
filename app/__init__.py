@@ -10,24 +10,12 @@ load_dotenv()
 
 
 
-# Peewee DB setup
-mydb = MySQLDatabase(
-    os.getenv("MYSQL_DATABASE"),
-    user=os.getenv("MYSQL_USER"),
-    password=os.getenv("MYSQL_PASSWORD"),
-    host=os.getenv("MYSQL_HOST", "localhost"),
-    port=3306
-)
-
-
-# Peewee model
 class TimelinePost(Model):
     name = CharField()
     email = CharField()
     content = TextField()
     created_at = DateTimeField(default=datetime.datetime.now)
-    class Meta:
-        database = mydb
+    
 
 # User data classes
 class User:
@@ -79,12 +67,7 @@ def create_app():
             port=3306
         )
 
-    # Link DB to model
-    TimelinePost._meta.database = mydb
     
-    mydb.connect()
-    mydb.create_tables([TimelinePost])
-
     # Create user object
     Aria = User(
         "Arianna Richardson",
