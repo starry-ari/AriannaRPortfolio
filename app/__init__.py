@@ -11,18 +11,7 @@ load_dotenv()
 
 
 #mydb is global bc of react reasons
-global mydb
-if os.getenv("TESTING") == "true":
-    print("Running in test mode")
-    mydb.init('file:memory?mode=memory&cache=shared', uri=True)
-else:
-    mydb.init(
-        os.getenv("MYSQL_DATABASE"),
-        user=os.getenv("MYSQL_USER"),
-        password=os.getenv("MYSQL_PASSWORD"),
-        host=os.getenv("MYSQL_HOST"),
-        port=3306
-    )
+
 # Peewee model
 class TimelinePost(Model):
     name = CharField()
@@ -67,6 +56,19 @@ class Places:
 
 # Create app and define routes
 def create_app():
+    
+    global mydb
+if os.getenv("TESTING") == "true":
+    print("Running in test mode")
+    mydb.init('file:memory?mode=memory&cache=shared', uri=True)
+else:
+    mydb.init(
+        os.getenv("MYSQL_DATABASE"),
+        user=os.getenv("MYSQL_USER"),
+        password=os.getenv("MYSQL_PASSWORD"),
+        host=os.getenv("MYSQL_HOST"),
+        port=3306
+    )
     app = Flask(__name__, static_folder='./build', static_url_path='/')
 
     # DB Initialization
