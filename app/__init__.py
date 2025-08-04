@@ -9,17 +9,19 @@ from playhouse.shortcuts import model_to_dict
 load_dotenv()
 
 
-
-# Peewee DB setup
-mydb = MySQLDatabase(
-    os.getenv("MYSQL_DATABASE"),
-    user=os.getenv("MYSQL_USER"),
-    password=os.getenv("MYSQL_PASSWORD"),
-    host=os.getenv("MYSQL_HOST", "localhost"),
-    port=3306
-)
-
-
+#mydb is global bc of react reasons
+global mydb
+if os.getenv("TESTING") == "true":
+    print("Running in test mode")
+    mydb.init('file:memory?mode=memory&cache=shared', uri=True)
+else:
+    mydb.init(
+        os.getenv("MYSQL_DATABASE"),
+        user=os.getenv("MYSQL_USER"),
+        password=os.getenv("MYSQL_PASSWORD"),
+        host=os.getenv("MYSQL_HOST"),
+        port=3306
+    )
 # Peewee model
 class TimelinePost(Model):
     name = CharField()
