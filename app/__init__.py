@@ -5,6 +5,7 @@ from dotenv import load_dotenv
 from peewee import *
 from playhouse.shortcuts import model_to_dict
 
+mydb = None
 # Load environment variables
 load_dotenv()
 
