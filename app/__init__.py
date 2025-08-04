@@ -64,7 +64,7 @@ class Places:
 
 # Create app and define routes
 def create_app():
-    app = Flask(__name__, static_folder='build', static_url_path='')
+    app = Flask(__name__, static_folder='./build', static_url_path='/')
 
     # DB Initialization
     if os.getenv("TESTING") == "true":
@@ -108,14 +108,15 @@ def create_app():
         content = request.form.get('content', '').strip()
 
         if not name:
-            return "Invalid name", 400
+            return jsonify({"error": "Invalid name"}), 400
         if not email or '@' not in email:
-            return "Invalid email", 400
+            return jsonify({"error": "Invalid email"}), 400
         if not content:
-            return "Invalid content", 400
+            return jsonify({"error": "Invalid content"}), 400
+
 
         timeline_post = TimelinePost.create(name=name, email=email, content=content)
-        return model_to_dict(timeline_post)
+        return jsonify(model_to_dict(timeline_post)),201
 
 
     @app.route('/api/timeline_post', methods=['GET'])
